@@ -8,37 +8,114 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
-#define DEFAULT  0
-#define NUM_MODS 1
-#define BT_CTRL  2
+#define QWERTY 0
+#define QWERTY_INV 1
+#define LOWER  2
+#define RAISE  3
+#define CONF   4
 
 / {
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        /* Qwerty
+         * ,-----------------------------------------------------------------------------------.
+         * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Ctrl | Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+         * `-----------------------------------------------------------------------------------'
+         */
+        qwerty {
             bindings = <
-    &kp ESC   &kp Q     &kp W    &kp E     &kp R       &kp T      &kp Y     &kp U        &kp I     &kp O     &kp P    &kp BSPC
-    &kp TAB   &kp A     &kp S    &kp D     &kp F       &kp G      &kp H     &kp J        &kp K     &kp L     &kp SEMI &kp SQT
-    &kp LSHFT &kp Z     &kp X    &kp C     &kp V       &kp B      &kp N     &kp M        &kp COMMA &kp DOT   &kp FSLH &kp ENTER
-    &kp LCTRL &kp LGUI  &kp LALT &kp BSLH  &to DEFAULT &kp SPACE  &trans    &to NUM_MODS &kp LEFT  &kp RIGHT &kp UP   &kp DOWN
+    &kp ESC    &kp Q      &kp W     &kp E     &kp R      &kp T      &kp Y   &kp U      &kp I      &kp O     &kp P     &kp BSPC
+    &kp TAB    &kp A      &kp S     &kp D     &kp F      &kp G      &kp H   &kp J      &kp K      &kp L     &kp SEMI  &kp SQT
+    &kp LSHFT  &kp Z      &kp X     &kp C     &kp V      &kp B      &kp N   &kp M      &kp COMMA  &kp DOT   &kp FSLH  &kp ENTER
+    &kp LCTRL  &kp LCTRL  &kp LALT  &kp LGUI  &mo LOWER  &kp SPACE  &trans  &mo RAISE  &kp LEFT   &kp DOWN  &kp UP    &kp RIGHT 
             >;
         };
 
-        num_mods {
+        /* Qwerty Inv
+         * ,-----------------------------------------------------------------------------------.
+         * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | GUI  | GUI  | Alt  | Ctrl |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+         * `-----------------------------------------------------------------------------------'
+         */
+        qwerty_inv {
             bindings = <
-    &kp GRAVE &kp N1    &kp N2   &kp N3   &kp N4      &kp N5     &kp N6    &kp N7      &kp N8    &kp N9    &kp N0   &kp DEL
-    &kp TAB   &kp F1    &kp F2   &kp F3   &kp F4      &kp F5     &kp F6    &kp MINUS   &kp PG_UP &kp LBKT  &kp RBKT &kp BSLH
-    &kp LSHFT &kp F7    &kp F8   &kp F9   &kp F10     &kp F11    &kp F12   &kp EQUAL   &kp PG_DN &kp HOME  &kp END  &kp ENTER
-    &kp LCTRL &kp LGUI  &kp LALT &sys_reset   &to DEFAULT &kp SPACE  &trans    &mo BT_CTRL &kp LEFT  &kp RIGHT &kp UP   &kp DOWN
+    &kp ESC    &kp Q      &kp W     &kp E     &kp R      &kp T      &kp Y   &kp U      &kp I      &kp O     &kp P     &kp BSPC
+    &kp TAB    &kp A      &kp S     &kp D     &kp F      &kp G      &kp H   &kp J      &kp K      &kp L     &kp SEMI  &kp SQT
+    &kp LSHFT  &kp Z      &kp X     &kp C     &kp V      &kp B      &kp N   &kp M      &kp COMMA  &kp DOT   &kp FSLH  &kp ENTER
+    &kp LGUI   &kp LGUI   &kp LALT  &kp LCTRL &mo LOWER  &kp SPACE  &trans  &mo RAISE  &kp LEFT   &kp DOWN  &kp UP    &kp RIGHT
+            >;
+        };
+        
+        
+        /* Lower
+         * ,-----------------------------------------------------------------------------------.
+         * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Del  |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Tab  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   _  |   +  |   {  |   }  |  |   |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Shift|  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   ,  |   <  |   >  |   ?  |Enter |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Conf |      |      |      |      |             |      | Home | Down |  Up  | End  |
+         * `-----------------------------------------------------------------------------------'
+         */
+        lower {
+            bindings = <
+    &kp TILDE  &kp EXCL   &kp AT    &kp HASH  &kp DOLLAR &kp PRCNT  &kp CARET  &kp AMPS   &kp STAR  &kp LPAR  &kp RPAR  &kp DEL
+    &kp TAB    &kp F1     &kp F2    &kp F3    &kp F4     &kp F5     &kp F6     &kp UNDER  &kp PLUS  &kp LBRC  &kp RBRC  &kp PIPE
+    &kp LSHFT  &kp F7     &kp F8    &kp F9    &kp F10    &kp F11    &kp F12    &kp COMMA  &kp LT    &kp GT    &kp QMARK &kp ENTER
+    &mo CONF  &kp LCTRL  &kp LALT  &kp LGUI  &mo LOWER  &kp SPACE  &trans     &mo RAISE  &kp HOME  &kp DOWN  &kp UP    &kp END
             >;
         };
 
-        bt_control {
+        /* Raise
+         * ,-----------------------------------------------------------------------------------.
+         * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Tab  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * | Shift|  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   ,  |   ,  |   .  |   /  |Enter |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * |      |      |      |      |      |             |      | Home | Down |  Up  | End  |
+         * `-----------------------------------------------------------------------------------'
+         */
+        raise {
+            bindings = <
+    &kp GRAVE  &kp N1     &kp N2     &kp N3     &kp N4     &kp N5     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0     &kp BSPC
+    &kp TAB    &kp F1     &kp F2     &kp F3     &kp F4     &kp F5     &kp F6     &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT   &kp BSLH
+    &kp LSHFT  &kp F7     &kp F8     &kp F9     &kp F10    &kp F11    &kp F12    &kp COMMA  &kp COMMA  &kp DOT    &kp FSLH   &kp ENTER
+    &kp LCTRL  &kp LCTRL  &kp LALT   &kp LGUI   &mo LOWER  &kp SPACE  &trans     &mo RAISE  &kp HOME   &kp DOWN   &kp UP     &kp END
+            >;
+        };
+
+        /* Conf
+         *                      v------------------------BT CONTROL--------------------v
+         * ,-----------------------------------------------------------------------------------.
+         * |BT_CLR| BT_1 | BT_2 | BT_3 | BT_4 |      |      |      |      |      |      |      |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * |      |      |      |      |      |      |      |      |      |      |      |      |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * |      |      |      |      | INV  |      |      |      |      |      |      |      |
+         * |------+------+------+------+------+------+------+------+------+------+------+------|
+         * |      |      |      |      |      |             |      |BT_PRV|BT_NXT|      |      |
+         * `-----------------------------------------------------------------------------------'
+         */
+        conf {
             bindings = <
     &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans    &trans    &trans     &trans     &trans   &trans
     &trans     &trans       &trans       &trans       &trans       &trans       &trans    &trans    &trans     &trans     &trans   &trans
-    &trans     &trans       &trans       &trans       &trans       &trans       &trans    &trans    &trans     &trans     &trans   &trans
+    &trans     &trans       &trans       &tog QWERTY_INV  &trans       &trans       &trans    &trans    &trans     &trans     &trans   &trans
     &trans     &trans       &trans       &trans       &trans       &trans       &trans    &trans    &bt BT_PRV &bt BT_NXT &trans   &trans
             >;
         };
